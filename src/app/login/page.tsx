@@ -5,7 +5,13 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 
@@ -25,7 +31,9 @@ export default function LoginPage() {
         const { error } = await supabase.auth.signUp({
           email,
           password,
-          options: { emailRedirectTo: window.location.origin + "/dashboard" },
+          options: {
+            emailRedirectTo: window.location.origin + "/api/auth/callback",
+          },
         });
         if (error) throw error;
         toast.success("Check your email to confirm your account.");
@@ -40,7 +48,8 @@ export default function LoginPage() {
         router.refresh();
       }
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Something went wrong";
+      const message =
+        err instanceof Error ? err.message : "Something went wrong";
       toast.error(message);
     } finally {
       setLoading(false);
