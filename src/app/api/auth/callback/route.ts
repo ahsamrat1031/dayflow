@@ -15,8 +15,8 @@ export async function GET(request: Request) {
     }
   }
 
-  // return the user to an error page with some instructions
+  // return the user to login with error
   return NextResponse.redirect(
-    request.headers.get("origin") + "/auth/auth-code-error",
+    request.headers.get("origin") + "/login?error=invalid_code",
   );
 }
