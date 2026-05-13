@@ -2,13 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import {
-  Check,
-  Circle,
-  GripVertical,
-  Pencil,
-  X,
-} from "lucide-react";
+import { Check, Circle, GripVertical, Pencil, X } from "lucide-react";
 import type { DraggableAttributes } from "@dnd-kit/core";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -56,6 +50,8 @@ export function TaskCard({
       setTaskDate(task.task_date);
     }
   }, [isEditing, task]);
+
+  if (isEditing) {
     return (
       <motion.div
         layout
@@ -80,7 +76,12 @@ export function TaskCard({
             onChange={(e) => setTaskDate(e.target.value)}
           />
           <div className="flex justify-end gap-2">
-            <Button type="button" variant="ghost" size="sm" onClick={onCancelEdit}>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={onCancelEdit}
+            >
               <X className="size-4" />
               Cancel
             </Button>
@@ -136,7 +137,9 @@ export function TaskCard({
           <div className="space-y-1">
             <p className="text-sm font-medium leading-snug">{task.title}</p>
             {task.description ? (
-              <p className="text-sm text-muted-foreground">{task.description}</p>
+              <p className="text-sm text-muted-foreground">
+                {task.description}
+              </p>
             ) : null}
             <p className="text-xs text-muted-foreground">
               Due {formatShortDate(task.task_date)}
